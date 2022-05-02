@@ -11,19 +11,19 @@ const { NotImplementedError } = require('../extensions/index.js');
  *
  */
 function encodeLine(str) {
-  let result = {};
+  let result = [];
+  let counter = 1;
   let arR = str.split('');
-  arR.forEach((el) => {
-  result[el] = (result[el] || 0) + 1;
+  arR.forEach((el,i) => {
+    if(el == arR[i+1]) {
+      counter++;
+    } else {
+      result.push(`${counter}${el}`);
+      counter = 1;
+    }
   });
-  let resultArr = [];
-  for ( key in result) {
-    let count = result[key]+key;
-    resultArr.push(count);
-  }
-  return resultArr.join('').replace(/[1]/, '');
+  return result.join('').replace(/[1]/g, '');
 }
-
 module.exports = {
   encodeLine
 };
